@@ -11,8 +11,8 @@ OPENAI_ENDPOINT = "https://openaiops-selfhealing.openai.azure.com/"
 
 openai.api_key = OPENAI_API_KEY
 
-@app.route(route="fix_script")
-def fix_script(req: func.HttpRequest) -> func.HttpResponse:
+@app.route(route="openaitesting")
+def openaitest(req: func.HttpRequest) -> func.HttpResponse:
     try:
         # Parse the incoming request
         data = req.get_json()
