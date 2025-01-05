@@ -45,3 +45,14 @@ def openaitesting(req: func.HttpRequest) -> func.HttpResponse:
     except Exception as e:
         logging.error(f"Error processing request: {e}")
         return func.HttpResponse("Error analyzing or fixing the script.", status_code=500)
+
+@app.route(route="check_env")
+def check_env(req: func.HttpRequest) -> func.HttpResponse:
+    api_key = os.getenv("OPENAI_API_KEY")
+    endpoint = os.getenv("OPENAI_ENDPOINT")
+
+    if not api_key or not endpoint:
+        return func.HttpResponse("Environment variables are missing.", status_code=500)
+
+    return func.HttpResponse(f"API Key: {api_key}, Endpoint: {endpoint}", status_code=200)
+
