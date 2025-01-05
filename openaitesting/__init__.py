@@ -9,12 +9,12 @@ app = func.FunctionApp(http_auth_level=func.AuthLevel.FUNCTION)
 OPENAI_API_KEY = "9iEof143bTMgjCn15Vj8aNVCs0hh2yU1hwcSGKuGAvFJXHriKAucJQQJ99ALACYeBjFXJ3w3AAABACOGaFVN"
 OPENAI_ENDPOINT = "https://openaiops-selfhealing.openai.azure.com/"
 
-openai.api_key = OPENAI_API_KEY
+openai.api_key = "9iEof143bTMgjCn15Vj8aNVCs0hh2yU1hwcSGKuGAvFJXHriKAucJQQJ99ALACYeBjFXJ3w3AAABACOGaFVN"
 
-@app.route(route="openaitesting")
-def openaitest(req: func.HttpRequest) -> func.HttpResponse:
+def main(req: func.HttpRequest) -> func.HttpResponse:
+    logging.info("Python HTTP trigger function processed a request.")
+
     try:
-        # Parse the incoming request
         data = req.get_json()
         script = data.get("script")
         if not script:
@@ -33,7 +33,6 @@ def openaitest(req: func.HttpRequest) -> func.HttpResponse:
             temperature=0.5
         )
 
-        # Extract and return the result
         fixed_script = response["choices"][0]["text"].strip()
         explanation = (
             f"The script was analyzed, and the following changes were made to fix the errors:\n\n"
