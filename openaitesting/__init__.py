@@ -7,6 +7,7 @@ app = func.FunctionApp(http_auth_level=func.AuthLevel.FUNCTION)
 
 @app.route(route="openaitesting")
 def openaitesting(req: func.HttpRequest) -> func.HttpResponse:
+     logging.info(f"Received request data: {data}")
      api_key = os.getenv("OPENAI_API_KEY")
     endpoint = os.getenv("OPENAI_ENDPOINT")
 
