@@ -11,16 +11,14 @@ OPENAI_ENDPOINT = "https://openaiops-selfhealing.openai.azure.com/"
 
 openai.api_key = "9iEof143bTMgjCn15Vj8aNVCs0hh2yU1hwcSGKuGAvFJXHriKAucJQQJ99ALACYeBjFXJ3w3AAABACOGaFVN"
 
-def main(req: func.HttpRequest) -> func.HttpResponse:
-    logging.info("Python HTTP trigger function processed a request.")
-
+@app.route(route="openaitesting")
+def openaitesting(req: func.HttpRequest) -> func.HttpResponse:
     try:
         data = req.get_json()
         script = data.get("script")
         if not script:
             return func.HttpResponse("No script provided.", status_code=400)
 
-        # Analyze and fix the script
         prompt = (
             f"The following Azure Automation script has an error. "
             f"Analyze the script, fix the issue, and explain the changes:\n\n{script}"
@@ -33,7 +31,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             temperature=0.5
         )
 
-        fixed_script = response["choices"][0]["text"].strip()
+        fixed_script = response.choices[0].text.strip()
         explanation = (
             f"The script was analyzed, and the following changes were made to fix the errors:\n\n"
             f"{fixed_script}"
